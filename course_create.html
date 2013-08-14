@@ -1,0 +1,242 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Create Course</title>
+<link href="css/main.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="css/jquery.js"></script>
+</head>
+<body>
+<form action="/Insert" method="post" enctype="multipart/form-data" onsubmit="return validate()" id="form1">
+<table width="900" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center"><div class="font2" style="margin-bottom:15px;">Create Course</div></td>
+  </tr>
+  <tr>
+    <td><table width="900" border="0" cellspacing="0" cellpadding="7" id="table2">
+      <tr>
+        <td width="150" align="right">Course Code ::</td>
+        <td colspan="2"><input name="course_code" type="text" id="course_code" maxlength="7"/>
+          <input type="button" name="chkStr" id="chkStr" value="Check" onclick="return chkEng()" /></td>
+        </tr>
+      <tr>
+        <td width="150" align="right">Course Name ::</td>
+        <td colspan="2"><input type="text" name="course_name" id="course_name" /></td>
+        </tr>
+      <tr>
+        <td width="150" align="right" valign="top">Prerequsite ::</td>
+        <td>        
+        <select name="prerequisite" id="prerequisite">
+        <option value="0">------------</option>
+ 		{% for row in course %}
+        <option value="{{ row[0] }}">{{ row[1] }}</option>
+        {% endfor %}
+        </select>
+            
+
+  </td>
+        <td width="550" valign="top">
+
+          </td>
+        </tr>
+      <tr>
+        <td width="150" align="right">Faculity ::</td>
+        <td colspan="2"><select name="faculity" id="faculity" onchange="return chkDep">
+          <option value="0"></option>
+          <option value="1">Engineering</option>
+          <option value="2">Information Technology</option>
+          <option value="3">Business Administration</option>
+          <option value="4">Language</option>
+        </select></td>
+        </tr>
+      <tr>
+        <td width="150" align="right">Dapartment</td>
+        <td colspan="2"><select name="department" id="department">
+        </select></td>
+        </tr>
+      <tr>
+        <td width="150" align="right">Course Description ::</td>
+        <td colspan="2"><textarea name="course_description" id="course_description" cols="45" rows="5"></textarea></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td align="right">
+    <table width="900" border="0" cellspacing="0" cellpadding="5">
+          <tr>
+            <td width="150" align="right">Credit Lecture ::</td>
+            <td width="100"><label>
+              <input name="credit_lecture" type="text" id="credit_lecture" maxlength="1" />
+            </label></td>
+            <td width="50">หน่วยกิต</td>
+            <td width="150"><select name="credit_type" id="credit_type">
+              <option value="0"></option>
+              <option value="1">กลุ่มวิชามนุษศาสตร์</option>
+              <option value="2">กลุ่มวิชาสังคมศาสตร์</option>
+              <option value="3">กลุ่มวิชาคณิตศาสตร์และวิทยาศาสตร์</option>
+              <option value="4">ภาษาต่างประเทศทั่วไป</option>
+              <option value="5">ภาษาต่างประเทศพิเศษ (JBJ)</option>
+              <option value="6">ภาษาไทย</option>
+              <option value="7">กลุ่มวิชาพลศึกษา</option>
+              <option value="8">วิชาเฉพาะ วิศวกรรม</option>
+              <option value="9">วิชาเฉพาะ เทคโนโลยีสารสนเทศ</option>
+              <option value="10">วิชาเฉพาะ บริหารธุรกิจ</option>
+              <option value="11">รายวิชาปฏิบัติการ ดูงาน</option>
+              <option value="12">รายวิชาสหกิจศึกษา / ฝึกงาน / โครงงาน</option>
+              <option value="13">รายวิชาเตรียมสหกิจศึกษา</option>
+            </select></td>
+            </tr>
+          <tr>
+            <td width="150" align="right">Credit Lab :: </td>
+            <td width="100"><label>
+              <input name="credit_lab" type="text" id="credit_lab" maxlength="1" />
+            </label></td>
+            <td width="50">หน่วยกิต</td>
+            <td width="150"><select name="credit_type2" id="credit_type2">
+              <option value="0"></option>
+              <option value="1">กลุ่มวิชามนุษศาสตร์</option>
+              <option value="2">กลุ่มวิชาสังคมศาสตร์</option>
+              <option value="3">กลุ่มวิชาคณิตศาสตร์และวิทยาศาสตร์</option>
+              <option value="4">ภาษาต่างประเทศทั่วไป</option>
+              <option value="5">ภาษาต่างประเทศพิเศษ (JBJ)</option>
+              <option value="6">ภาษาไทย</option>
+              <option value="7">กลุ่มวิชาพลศึกษา</option>
+              <option value="8">วิชาเฉพาะ วิศวกรรม</option>
+              <option value="9">วิชาเฉพาะ เทคโนโลยีสารสนเทศ</option>
+              <option value="10">วิชาเฉพาะ บริหารธุรกิจ</option>
+              <option value="11">รายวิชาปฏิบัติการ ดูงาน</option>
+              <option value="12">รายวิชาสหกิจศึกษา / ฝึกงาน / โครงงาน</option>
+              <option value="13">รายวิชาเตรียมสหกิจศึกษา</option>
+            </select></td>
+            </tr>
+          <tr>
+            <td width="150" align="right">Credit Learning ::</td>
+            <td width="100"><label>
+              <input name="credit_learning" type="text" id="credit_learning" maxlength="1" />
+            </label></td>
+            <td width="50">หน่วยกิต</td>
+            <td width="150"></td>
+            </tr>
+          </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="right">
+    <table width="450" border="0" cellpadding="10" cellspacing="0" id="footer">
+      <tr class="font2">
+        <td width="100" align="center">
+        <input style="width:140px; height:30px;" type="submit" name="submit" id="submit" value="Submit" onclick="return confirm('Are you sure create course');" />
+        </td>
+        <td width="100" align="center">
+        <input style="width:140px; height:30px;" type="reset" name="Reset" id="Reset" value="Reset" />
+        </td>
+        <td width="100" align="center">
+        <input style="width:140px; height:30px;" type="button" name="back" id="back" value="Back" onClick="window.history.back()" />
+        </td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+</table>
+</form>
+</body>
+</html>
+
+<script type="text/javascript">
+  function validate(){
+
+    if(document.getElementById('course_code').value==""){
+      document.getElementById('course_code').focus();
+      return false;
+    }
+    else if(document.getElementById('course_name').value==""){
+      alert("Please insert Course Name");
+      document.getElementById('course_name').focus();
+      return false;
+    }
+    else if(document.getElementById('course_description').value==""){
+      alert("Please insert Course Description");
+      document.getElementById('course_description').focus();
+      return false;
+    }
+    else if(document.getElementById('credit_lecture').value==""){
+      alert("Please insert Credit Lecture");
+      document.getElementById('credit_lecture').focus();
+      return false;
+    }
+    else if(isNaN(document.getElementById('credit_lecture').value)){
+      alert('Please insert Number Only');
+      document.getElementById('credit_lecture').select();
+      return false; 
+    }
+    else if(document.getElementById('credit_lab').value==""){
+      alert("Please insert Credit Lab");
+      document.getElementById('credit_lab').focus();
+      return false;
+    }
+    else if(isNaN(document.getElementById('credit_lab').value)){
+      alert('Please insert Number Only');
+      document.getElementById('credit_lab').select();
+      return false; 
+    }
+    else if(document.getElementById('credit_learning').value==""){
+      alert("Please insert Credit Lerning");
+      document.getElementById('credit_learning').focus();
+      return false;
+    }
+    else if(isNaN(document.getElementById('credit_learning').value)){
+      alert('Please insert Credit Number Only');
+      document.getElementById('credit_learning').select();
+      return false; 
+    }
+    else if(document.getElementById('faculity').value=='0'){
+      alert('Please select Faculity');
+      document.getElementById('faculity').select();
+      return false; 
+    }
+  }
+function chkEng()
+{ 
+   if(!$("#course_code").val().match(/^[A-Za-z]{3}-[0-9]{3}$/)) {
+        alert("Please insert  correct Format.  \nExample  ::  JPN-101 ");
+        return false;
+      }
+}
+		$(function() {
+
+			// สร้างตัวตรวจสอบว่าตัวเลือกคณะมีการเปลี่ยนแปลงค่าหรือเปล่า
+			$("#faculity").change(function() {
+
+				// ดึงค่าที่ผู้ใช้เลือกมาเก็บ
+				var selected = $(this).val();
+
+				// ตัวสอบว่าเลือกอะไรมาก
+				if(selected == '1') {
+					var html = "<option value='8'>Computer Engineering</option>\
+          						<option value='9'>Production Engineering </option>\
+          						<option value='10'>Automotive Engineering </option>\
+         						<option value='11'>Electrical Engineering</option>\
+          						<option value='12'>Industrial Engineering</option>";
+
+					// เอาตัวเลือกที่วางไว้ไปใส่ในส่วนของให้เลือกสาขา
+					$("#department").html(html);
+				} else if(selected == '2') {
+					var html = "<option value='1'>Infomation Technology</option>\
+          						<option value='2'>Multimedia Technology </option>\
+          						<option value='3'>Business Information Technology</option>";
+					$("#department").html(html);
+				} else if(selected == '3') {
+					var html = "<option value='4'>Accountancy</option>\
+          						<option value='5'>Industrial Management</option>\
+          						<option value='6'>International Business Management </option>\
+          						<option value='7'>Japanese Businees Administration</option>";
+					$("#department").html(html);
+				} else if(selected == '4') {
+					var html = "<option value='13'>Lannguage</option>";
+					$("#department").html(html);
+				}
+			});
+
+		});
+
+</script>
